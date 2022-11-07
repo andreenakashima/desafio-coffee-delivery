@@ -3,11 +3,9 @@ import { Header } from "../components/Header";
 
 export function DefaultLayout() {
 	return (
-		<div className="bg-background h-screen w-full">
-			<div className="md:w-3/4 m-auto">
-				<Header />
-				<Outlet />
-			</div>
+		<div className="h-screen w-full bg-background font-roboto">
+			<Header />
+			<Outlet />
 		</div>
 	);
 }

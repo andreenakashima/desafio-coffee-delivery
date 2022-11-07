@@ -28,6 +28,9 @@ module.exports = {
 				baloo2: "'Baloo 2', cursive",
 				roboto: "'Roboto', sans-serif",
 			},
+			backgroundImage: {
+				"hero-pattern": "url(src/assets/background.svg)",
+			},
 		},
 	},
 	plugins: [],
