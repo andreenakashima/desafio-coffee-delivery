@@ -9,6 +9,7 @@ export function Hero() {
 					<h1 className="text-bold font-baloo2 text-2xl text-base-title lg:text-5xl">
 						Encontre o café perfeito <br /> para qualquer hora do dia
 					</h1>
+
 					<p className="pt-4 text-xl text-base-subtitle">
 						Com o Coffee Delivery você recebe seu café onde estiver, a qualquer
 						hora
@@ -41,6 +42,7 @@ export function Hero() {
 						</li>
 					</ul>
 				</div>
+
 				<div className="mt-20 flex w-full items-center justify-center lg:mt-0">
 					<img className="w-auto" src={ImgCoffee} alt="" />
 				</div>
