@@ -1,31 +1,50 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 
-export function Card() {
+interface CardProps {
+  id: number;
+  name: string;
+  tags: string[];
+  description: string;
+  price: number;
+  imgUrl: string;
+}
+
+export function Card({
+  id,
+  name,
+  tags,
+  description,
+  price,
+  imgUrl,
+}: CardProps) {
   return (
-    <li className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card py-5 px-6 text-center">
+    <li
+      key={id}
+      className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card py-5 px-6 text-center"
+    >
       <img
         className="absolute left-1/2 -top-6 -ml-14 block h-28 w-28"
-        src="./products-img/expresso.png"
+        src={imgUrl}
         alt=""
       />
 
       <div className="mt-24">
-        <span className="rounded-full bg-coffee-yellow-light px-2 py-1 text-xs font-semibold uppercase text-coffee-yellow-dark">
-          Tradicional
-        </span>
+        {tags.map((tag) => (
+          <span className="mx-1 rounded-full bg-coffee-yellow-light px-2 py-1 text-[10px] font-semibold uppercase text-coffee-yellow-dark">
+            {tag}
+          </span>
+        ))}
       </div>
 
       <h3 className="mt-4 font-baloo2 text-xl font-semibold text-base-subtitle">
-        Expresso Tradicional
+        {name}
       </h3>
 
-      <p className="mt-2 text-sm text-base-label">
-        O tradicional café feito com água quente e grãos moídos
-      </p>
+      <p className="mt-2 text-sm text-base-label">{description}</p>
 
       <div className="mt-8 flex items-center justify-between">
         <div className="font-baloo2 text-2xl text-base-subtitle">
-          <span className="font-roboto text-sm">R$</span> 9,90
+          <span className="font-roboto text-sm">R$</span> {price}
         </div>
 
         <div className="flex items-center justify-center gap-2">
