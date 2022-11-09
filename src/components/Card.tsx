@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { priceFormatter } from "../utilities/formatter";
 
 interface CardProps {
   id: number;
@@ -20,7 +21,7 @@ export function Card({
   return (
     <li
       key={id}
-      className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card py-5 px-6 text-center"
+      className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card p-5 text-center"
     >
       <img
         className="absolute left-1/2 -top-6 -ml-14 block h-28 w-28"
@@ -44,7 +45,8 @@ export function Card({
 
       <div className="mt-8 flex items-center justify-between">
         <div className="font-baloo2 text-2xl text-base-subtitle">
-          <span className="font-roboto text-sm">R$</span> {price}
+          <span className="font-roboto text-sm">R$</span>{" "}
+          {priceFormatter.format(price)}
         </div>
 
         <div className="flex items-center justify-center gap-2">
