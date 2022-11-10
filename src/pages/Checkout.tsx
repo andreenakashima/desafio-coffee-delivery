@@ -14,7 +14,7 @@ export function Checkout() {
   const { cartItems } = useCart();
 
   return (
-    <form action="">
+    <form>
       <div className="m-auto mt-10 w-3/4 gap-8 xl:grid xl:grid-cols-5">
         <div className="xl:col-span-3">
           <h2 className="font-baloo2 text-lg text-base-subtitle">
@@ -150,7 +150,9 @@ export function Checkout() {
 
           <div className="mt-3 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card p-10">
             <ul>
-              <CardCart />
+              {cartItems.map((item) => (
+                <CardCart key={item.id} {...item} />
+              ))}
             </ul>
 
             <div>
