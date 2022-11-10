@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { useCart } from "../context/CartContext";
 import { priceFormatter } from "../utilities/formatter";
 
 interface CardProps {
@@ -18,11 +19,13 @@ export function Card({
   price,
   imgUrl,
 }: CardProps) {
+  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
+    useCart();
+
+  const quantity = getItemQuantity(id);
+
   return (
-    <li
-      key={id}
-      className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card p-5 text-center"
-    >
+    <li className="relative m-auto w-64 rounded-md rounded-tr-[36px] rounded-bl-[36px] bg-base-card p-5 text-center">
       <img
         className="absolute left-1/2 -top-6 -ml-14 block h-28 w-28"
         src={imgUrl}
@@ -30,8 +33,11 @@ export function Card({
       />
 
       <div className="mt-24">
-        {tags.map((tag) => (
-          <span className="mx-1 rounded-full bg-coffee-yellow-light px-2 py-1 text-[10px] font-semibold uppercase text-coffee-yellow-dark">
+        {tags.map((tag, index) => (
+          <span
+            key={index}
+            className="mx-1 rounded-full bg-coffee-yellow-light px-2 py-1 text-[10px] font-semibold uppercase text-coffee-yellow-dark"
+          >
             {tag}
           </span>
         ))}
@@ -51,13 +57,19 @@ export function Card({
 
         <div className="flex items-center justify-center gap-2">
           <div className="rounded-md bg-base-button">
-            <button className="px-2 py-3 text-coffee-purple">
+            <button
+              className="px-2 py-3 text-coffee-purple"
+              onClick={() => decreaseCartQuantity(id)}
+            >
               <Minus size={14} weight="bold" />
             </button>
 
-            <span className="p-2">1</span>
+            <span className="p-2">{quantity}</span>
 
-            <button className="px-2 py-3 text-coffee-purple">
+            <button
+              className="px-2 py-3 text-coffee-purple"
+              onClick={() => increaseCartQuantity(id)}
+            >
               <Plus size={14} weight="bold" />
             </button>
           </div>

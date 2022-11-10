@@ -13,7 +13,7 @@ export function Home() {
 
         <ul className="mt-14 grid content-center justify-center gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
-            <Card {...product} />
+            <Card key={product.id} {...product} />
           ))}
         </ul>
       </div>
