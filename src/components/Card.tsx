@@ -73,7 +73,10 @@ export function Card({
               <Plus size={14} weight="bold" />
             </button>
           </div>
-          <button className="rounded-md bg-coffee-purple-dark p-2 text-white hover:bg-coffee-purple">
+          <button
+            className="rounded-md bg-coffee-purple-dark p-2 text-white hover:bg-coffee-purple"
+            onClick={() => increaseCartQuantity(id)}
+          >
             <ShoppingCart size={22} weight="fill" />
           </button>
         </div>

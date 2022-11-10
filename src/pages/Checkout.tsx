@@ -5,9 +5,14 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
+
 import { CardCart } from "../components/CardCart";
 
+import { useCart } from "../context/CartContext";
+
 export function Checkout() {
+  const { cartItems } = useCart();
+
   return (
     <form action="">
       <div className="m-auto mt-10 w-3/4 gap-8 xl:grid xl:grid-cols-5">

@@ -12,6 +12,7 @@ interface CartItem {
 interface CartContextProps {
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
+  removeFromCart: (id: number) => void;
   getItemQuantity: (id: number) => number;
   cartQuantity: number;
   cartItems: CartItem[];
@@ -58,6 +59,12 @@ export function CartProvider({ children }: CartProviderProps) {
     });
   }
 
+  function removeFromCart(id: number) {
+    setCartItems((currentItems) => {
+      return currentItems.filter((item) => item.id !== id);
+    });
+  }
+
   function getItemQuantity(id: number) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
@@ -74,6 +81,7 @@ export function CartProvider({ children }: CartProviderProps) {
         cartItems,
         increaseCartQuantity,
         decreaseCartQuantity,
+        removeFromCart,
         getItemQuantity,
       }}
     >
