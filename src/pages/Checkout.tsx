@@ -9,9 +9,21 @@ import {
 import { CardCart } from "../components/CardCart";
 
 import { useCart } from "../context/CartContext";
+import { priceFormatter } from "../utilities/formatter";
+
+import products from "../data/products.json";
 
 export function Checkout() {
   const { cartItems } = useCart();
+
+  const deliveryFee = 4.5;
+
+  const productsTotal = cartItems.reduce((total, cartItem) => {
+    const product = products.find((item) => item.id === cartItem.id);
+    return total + (product?.price || 0) * cartItem.quantity;
+  }, 0);
+
+  const orderTotal = productsTotal + deliveryFee;
 
   return (
     <form>
@@ -157,13 +169,16 @@ export function Checkout() {
 
             <div>
               <p className="flex items-center justify-between text-base-text">
-                <span>Total de itens</span> <span>R$ 29,70</span>
+                <span>Total de itens</span>{" "}
+                <span>R$ {priceFormatter.format(productsTotal)}</span>
               </p>
               <p className="mt-3 flex items-center justify-between text-base-text">
-                <span>Entrega</span> <span>R$ 3,50</span>
+                <span>Entrega</span>{" "}
+                <span>R$ {priceFormatter.format(deliveryFee)}</span>
               </p>
               <p className="mt-3 flex items-center justify-between text-xl font-bold text-base-subtitle">
-                <span>Total</span> <span>R$ 33,20</span>
+                <span>Total</span>{" "}
+                <span>R$ {priceFormatter.format(orderTotal)}</span>
               </p>
             </div>
 
