@@ -26,7 +26,10 @@ export function useCart() {
 }
 
 export function CartProvider({ children }: CartProviderProps) {
-  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>("cart", []);
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>(
+    "@Coffee-cart",
+    []
+  );
 
   function increaseCartQuantity(id: number) {
     setCartItems((currentItems) => {

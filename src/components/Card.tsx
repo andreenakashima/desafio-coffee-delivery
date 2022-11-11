@@ -1,4 +1,5 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { priceFormatter } from "../utilities/formatter";
 
@@ -64,7 +65,7 @@ export function Card({
               <Minus size={14} weight="bold" />
             </button>
 
-            <span className="p-2">{quantity}</span>
+            <span className="p-2 text-sm">{quantity}</span>
 
             <button
               className="px-2 py-3 text-coffee-purple"
@@ -73,12 +74,14 @@ export function Card({
               <Plus size={14} weight="bold" />
             </button>
           </div>
-          <button
+
+          <Link
+            to="/checkout"
             className="rounded-md bg-coffee-purple-dark p-2 text-white hover:bg-coffee-purple"
             onClick={() => increaseCartQuantity(id)}
           >
             <ShoppingCart size={22} weight="fill" />
-          </button>
+          </Link>
         </div>
       </div>
     </li>
