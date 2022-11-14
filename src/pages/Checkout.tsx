@@ -1,15 +1,13 @@
-import { CurrencyDollar, MapPinLine } from "phosphor-react";
-
-import { CardCart } from "../components/CardCart";
-
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import { useCart } from "../context/CartContext";
 
-import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
-
-import { priceFormatter } from "../utilities/formatter";
-import products from "../data/products.json";
+import { CardCart } from "../components/CardCart";
 import { FormInputs } from "../components/form/FormInputs";
 import { FormRadios } from "../components/form/FormRadios";
+
+import { CurrencyDollar, MapPinLine } from "phosphor-react";
+import { priceFormatter } from "../utilities/formatter";
+import products from "../data/products.json";
 
 interface FormInputs {
   cep: string;
