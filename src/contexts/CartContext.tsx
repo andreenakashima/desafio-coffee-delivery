@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
+import products from "../data/products.json";
+
 interface CartProviderProps {
   children: ReactNode;
 }
@@ -17,11 +19,14 @@ interface CartContextProps {
   getItemQuantity: (id: number) => number;
   cartQuantity: number;
   cartItems: CartItem[];
+  deliveryFee: number;
+  productsTotal: number;
+  orderTotal: number;
 }
 
 const CartContext = createContext({} as CartContextProps);
 
-export function useCart() {
+export function useCartContext() {
   return useContext(CartContext);
 }
 
@@ -78,6 +83,15 @@ export function CartProvider({ children }: CartProviderProps) {
     0
   );
 
+  const deliveryFee = 4.5;
+
+  const productsTotal = cartItems.reduce((total, cartItem) => {
+    const product = products.find((item) => item.id === cartItem.id);
+    return total + (product?.price || 0) * cartItem.quantity;
+  }, 0);
+
+  const orderTotal = productsTotal + deliveryFee;
+
   return (
     <CartContext.Provider
       value={{
@@ -87,6 +101,9 @@ export function CartProvider({ children }: CartProviderProps) {
         decreaseCartQuantity,
         removeFromCart,
         getItemQuantity,
+        deliveryFee,
+        productsTotal,
+        orderTotal,
       }}
     >
       {children}

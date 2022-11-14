@@ -1,40 +1,44 @@
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
-import { useCart } from "../context/CartContext";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCartContext } from "../contexts/CartContext";
+import { CurrencyDollar, MapPinLine } from "phosphor-react";
 
-import { CardCart } from "../components/CardCart";
 import { FormInputs } from "../components/form/FormInputs";
 import { FormRadios } from "../components/form/FormRadios";
+import { CardCart } from "../components/CardCart";
+import { TotalOrder } from "../components/TotalOrder";
 
-import { CurrencyDollar, MapPinLine } from "phosphor-react";
-import { priceFormatter } from "../utilities/formatter";
-import products from "../data/products.json";
+const FormInputsSchema = z.object({
+  cep: z
+    .string()
+    .min(1, { message: "O campo não pode estar vazio" })
+    .regex(/[0-9]{5}-[0-9]{3}/, {
+      message: "Preencha o CEP no formato. Ex: 99999-99",
+    }),
+  street: z.string().min(1, { message: "O campo não pode estar vazio" }),
+  number: z.string().min(1, { message: "O campo não pode estar vazio" }),
+  complement: z.string().optional(),
+  district: z.string().min(1, { message: "O campo não pode estar vazio" }),
+  city: z.string().min(1, { message: "O campo não pode estar vazio" }),
+  state: z
+    .string()
+    .min(1, { message: "O campo não pode estar vazio" })
+    .max(2, { message: "Máximo 2 caracteres" }),
+  payments: z.enum(["credit-card", "debit-card", "money"]),
+});
 
-interface FormInputs {
-  cep: string;
-  street: string;
-  number: string;
-  complement: string;
-  district: string;
-  city: string;
-  state: string;
-  payments: string;
-}
+export type FormInputTypes = z.infer<typeof FormInputsSchema>;
 
 export function Checkout() {
-  const { cartItems } = useCart();
+  const { cartItems } = useCartContext();
 
-  const methods = useForm<FormInputs>();
+  const methods = useForm<FormInputTypes>({
+    resolver: zodResolver(FormInputsSchema),
+    defaultValues: { payments: "credit-card" },
+  });
 
-  const deliveryFee = 4.5;
-
-  const productsTotal = cartItems.reduce((total, cartItem) => {
-    const product = products.find((item) => item.id === cartItem.id);
-    return total + (product?.price || 0) * cartItem.quantity;
-  }, 0);
-
-  const orderTotal = productsTotal + deliveryFee;
-
-  const onSubmit: SubmitHandler<FormInputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormInputTypes> = (data) => console.log(data);
 
   return (
     <FormProvider {...methods}>
@@ -91,20 +95,7 @@ export function Checkout() {
                 ))}
               </ul>
 
-              <div>
-                <p className="flex items-center justify-between text-base-text">
-                  <span>Total de itens</span>{" "}
-                  <span>R$ {priceFormatter.format(productsTotal)}</span>
-                </p>
-                <p className="mt-3 flex items-center justify-between text-base-text">
-                  <span>Entrega</span>{" "}
-                  <span>R$ {priceFormatter.format(deliveryFee)}</span>
-                </p>
-                <p className="mt-3 flex items-center justify-between text-xl font-bold text-base-subtitle">
-                  <span>Total</span>{" "}
-                  <span>R$ {priceFormatter.format(orderTotal)}</span>
-                </p>
-              </div>
+              <TotalOrder />
 
               <button className="mt-6 w-full rounded-md bg-coffee-yellow py-3 font-bold uppercase text-white hover:bg-coffee-yellow-dark">
                 Confirmar Pedido

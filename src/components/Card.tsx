@@ -1,6 +1,6 @@
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useCartContext } from "../contexts/CartContext";
 import { priceFormatter } from "../utilities/formatter";
 
 interface CardProps {
@@ -21,7 +21,7 @@ export function Card({
   imgUrl,
 }: CardProps) {
   const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
-    useCart();
+    useCartContext();
 
   const quantity = getItemQuantity(id);
 

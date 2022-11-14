@@ -1,5 +1,5 @@
 import { Minus, Plus, Trash } from "phosphor-react";
-import { useCart } from "../context/CartContext";
+import { useCartContext } from "../contexts/CartContext";
 
 import products from "../data/products.json";
 import { priceFormatter } from "../utilities/formatter";
@@ -10,7 +10,7 @@ interface CardCartProps {
 
 export function CardCart({ id, quantity }: CardCartProps) {
   const { increaseCartQuantity, removeFromCart, decreaseCartQuantity } =
-    useCart();
+    useCartContext();
 
   const cardCartProduct = products.find((product) => product.id === id);
   if (cardCartProduct == null) return null;

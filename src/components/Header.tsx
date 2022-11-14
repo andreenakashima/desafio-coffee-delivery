@@ -1,10 +1,10 @@
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
-import { useCart } from "../context/CartContext";
+import { useCartContext } from "../contexts/CartContext";
 
 export function Header() {
-  const { cartQuantity } = useCart();
+  const { cartQuantity } = useCartContext();
 
   return (
     <div className="m-auto px-4 md:w-3/4">
