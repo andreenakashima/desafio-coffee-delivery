@@ -17,6 +17,7 @@ interface CartContextProps {
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
   getItemQuantity: (id: number) => number;
+  clearCart: () => void;
   cartQuantity: number;
   cartItems: CartItem[];
   deliveryFee: number;
@@ -83,12 +84,26 @@ export function CartProvider({ children }: CartProviderProps) {
     0
   );
 
-  const deliveryFee = 4.5;
+  function clearCart() {
+    setCartItems([]);
+  }
+
+  function addDeliveryFee(tax: number): any {
+    let deliveryTax;
+
+    if (Object.keys(cartItems).length !== 0) {
+      return (deliveryTax = tax);
+    } else {
+      return (deliveryTax = 0);
+    }
+  }
 
   const productsTotal = cartItems.reduce((total, cartItem) => {
     const product = products.find((item) => item.id === cartItem.id);
     return total + (product?.price || 0) * cartItem.quantity;
   }, 0);
+
+  const deliveryFee = addDeliveryFee(4.5);
 
   const orderTotal = productsTotal + deliveryFee;
 
@@ -101,6 +116,7 @@ export function CartProvider({ children }: CartProviderProps) {
         decreaseCartQuantity,
         removeFromCart,
         getItemQuantity,
+        clearCart,
         deliveryFee,
         productsTotal,
         orderTotal,

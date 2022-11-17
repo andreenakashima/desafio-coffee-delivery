@@ -1,7 +1,14 @@
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
+import { useLocation } from "react-router-dom";
 import DeliveryImg from "../assets/delivery-image.svg";
 
 export function Success() {
+  const location = useLocation();
+
+  const orderDetails = location.state.orderDetails;
+
+  console.log(orderDetails);
+
   return (
     <div className="container mx-auto mt-20 w-3/4">
       <h2 className="font-baloo2 text-4xl text-coffee-yellow-dark">
@@ -20,9 +27,13 @@ export function Success() {
                   <MapPin size={16} weight="fill" />
                 </div>{" "}
                 <p>
-                  Entrega em <strong>Rua Joao Daniel Martineli, 102</strong>{" "}
+                  Entrega em <strong>{orderDetails.address.street}</strong>
+                  {", "}
+                  <strong>{orderDetails.address.number}</strong>
                   <br />
-                  Farrapos - Porto Alegre, RS
+                  {orderDetails.address.district} - {orderDetails.address.city}
+                  {", "}
+                  {orderDetails.address.state}
                 </p>
               </li>
 
@@ -44,7 +55,15 @@ export function Success() {
                 <p>
                   Pagamento na entrega
                   <br />
-                  <strong>Cartão de Crédito</strong>
+                  {orderDetails.address.payments === "credit-card" && (
+                    <strong>Cartão de Crédito</strong>
+                  )}
+                  {orderDetails.address.payments === "debit-card" && (
+                    <strong>Cartão de Débito</strong>
+                  )}
+                  {orderDetails.address.payments === "money" && (
+                    <strong>Dinheiro</strong>
+                  )}
                 </p>
               </li>
             </ul>

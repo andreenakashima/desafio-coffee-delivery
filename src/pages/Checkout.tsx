@@ -1,6 +1,9 @@
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useCartContext } from "../contexts/CartContext";
 import { CurrencyDollar, MapPinLine } from "phosphor-react";
 
@@ -31,25 +34,29 @@ const FormInputsSchema = z.object({
 export type FormInputTypes = z.infer<typeof FormInputsSchema>;
 
 export function Checkout() {
-  const { cartItems } = useCartContext();
+  const { cartItems, clearCart } = useCartContext();
+  const navigate = useNavigate();
 
   const methods = useForm<FormInputTypes>({
     resolver: zodResolver(FormInputsSchema),
     defaultValues: { payments: "credit-card" },
   });
 
-  const onSubmit: SubmitHandler<FormInputTypes> = (data) => {
-    const orderDetails = {
-      order: {
-        orderItems: {
-          cartItems,
+  const onSubmit: SubmitHandler<FormInputTypes> = (address) => {
+    if (cartItems !== null) {
+      const orderDetails = {
+        cartItems,
+        address,
+      };
+
+      navigate("/success", {
+        state: {
+          orderDetails,
         },
-        orderDeliveryInfo: {
-          data,
-        },
-      },
-    };
-    console.log(orderDetails);
+      });
+
+      clearCart();
+    }
   };
 
   return (
@@ -109,9 +116,18 @@ export function Checkout() {
 
               <TotalOrder />
 
-              <button className="mt-6 w-full rounded-md bg-coffee-yellow py-3 font-bold uppercase text-white hover:bg-coffee-yellow-dark">
-                Confirmar Pedido
-              </button>
+              {Object.keys(cartItems).length !== 0 ? (
+                <button className="mt-6 w-full rounded-md bg-coffee-yellow py-3 font-bold uppercase text-white hover:bg-coffee-yellow-dark">
+                  Confirmar Pedido
+                </button>
+              ) : (
+                <Link
+                  to="/"
+                  className="mt-6 inline-block w-full rounded-md bg-coffee-yellow py-3 text-center font-bold uppercase text-white hover:bg-coffee-yellow-dark"
+                >
+                  Voltar ao catálogo
+                </Link>
+              )}
             </div>
           </div>
         </div>
