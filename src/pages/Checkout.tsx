@@ -38,7 +38,19 @@ export function Checkout() {
     defaultValues: { payments: "credit-card" },
   });
 
-  const onSubmit: SubmitHandler<FormInputTypes> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormInputTypes> = (data) => {
+    const orderDetails = {
+      order: {
+        orderItems: {
+          cartItems,
+        },
+        orderDeliveryInfo: {
+          data,
+        },
+      },
+    };
+    console.log(orderDetails);
+  };
 
   return (
     <FormProvider {...methods}>
