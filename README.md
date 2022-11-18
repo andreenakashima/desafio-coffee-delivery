@@ -15,3 +15,5 @@ Exemplo de página de pedidos criado em React
 ![Home](screenshot.jpg)
 
 ![Checkout](screenshot2.jpg)
+
+:point_right: [Acesse a demo](https://coffee-delivery-andreenakashima.netlify.app/)
