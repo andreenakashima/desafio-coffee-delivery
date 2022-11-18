@@ -15,7 +15,7 @@ export function Header() {
         <div className="flex gap-3">
           <div className="flex gap-1 rounded-md bg-coffee-purple-light p-2 text-coffee-purple-dark">
             <MapPin size={22} weight="fill" />
-            Porto Alegre, RS
+            Altônia, PR
           </div>
           <Link
             to="/checkout"

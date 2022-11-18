@@ -55,6 +55,8 @@ export function Checkout() {
         },
       });
 
+      console.log(orderDetails);
+
       clearCart();
     }
   };
